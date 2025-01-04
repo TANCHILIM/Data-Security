@@ -34,12 +34,18 @@ def get_db_connection(database="company_db"):
 def create_database():
     """
     Creates the database if it does not exist.
+    Connects to MySQL server without specifying the database.
     """
-    connection = get_db_connection()
+    connection = pymysql.connect(
+        host="localhost",
+        user="root",
+        password="",  # Add your MySQL password if applicable
+        autocommit=True
+    )
     cursor = connection.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS company_db;")
     connection.close()
-    print("Database 'company_db' created successfully or already exists.")
+    print("Database 'company_db' created successfully or already exists.")
 
 def initialize_database():
     """
