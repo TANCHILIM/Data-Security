@@ -3,22 +3,22 @@
 {% block content %}
 <h2>Database Overview</h2>
 {% for table_name, table_data in database_data.items() %}
-    <h3>Table: {{ table_name }}</h3>
+    <h3>Table: {{ table_name | e }}</h3>
     <form action="{{ url_for('delete_table', table_name=table_name) }}" method="post" style="display:inline;">
-        <button type="submit" onclick="return confirm('Are you sure you want to delete the table {{ table_name }}?')">
+        <button type="submit" onclick="return confirm('Are you sure you want to delete the table {{ table_name | e }}?')">
             Delete Table
         </button>
     </form>
     <table border="1">
         <tr>
             {% for column in table_data.columns %}
-            <th>{{ column }}</th>
+            <th>{{ column | e }}</th>
             {% endfor %}
         </tr>
         {% for row in table_data.rows %}
         <tr>
             {% for cell in row %}
-            <td>{{ cell }}</td>
+            <td>{{ cell | e }}</td>
             {% endfor %}
         </tr>
         {% endfor %}
