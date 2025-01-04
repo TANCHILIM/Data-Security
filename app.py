@@ -1,3 +1,8 @@
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+
+
 import re  
 
 # Define password validation function
@@ -22,11 +27,16 @@ from db_config import initialize_database
 from flask import flash
 from datetime import timedelta
 
+
+
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
 # Set session lifetime
 app.permanent_session_lifetime = timedelta(minutes=2)  
+
+# Initialize the limiter
+limiter = Limiter(get_remote_address, app=app)
 
 bcrypt = Bcrypt(app)
 db = get_db_connection()
@@ -75,6 +85,7 @@ def register():
 
 
 @app.route("/login", methods=["GET", "POST"])
+@limiter.limit("5 per minute")  # Restrict to 5 attempts per minute
 def login():
     if request.method == "POST":
         username = request.form["username"]
