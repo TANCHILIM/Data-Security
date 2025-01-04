@@ -12,12 +12,13 @@
     {% for log in logs %}
     <tr>
         <td>{{ log.id }}</td>
-        <td>{{ log.username }}</td>
-        <td>{{ log.action }}</td>
-        <td>{{ log.table_name }}</td>
-        <td>{{ log.record_id }}</td>
-        <td>{{ log.ip_address }}</td>
-        <td>{{ log.timestamp }}</td>
+        <td>{{ log.username | e }}</td> <!-- Escape username -->
+        <td>{{ log.action | e }}</td> <!-- Escape action -->
+        <td>{{ log.table_name | e }}</td> <!-- Escape table name -->
+        <td>{{ log.record_id | e }}</td> <!-- Escape record ID -->
+        <td>{{ log.ip_address | e }}</td> <!-- Escape IP address -->
+        <td>{{ log.timestamp }}</td> <!-- (No need to escape timestamp if it's safe) -->
+
     </tr>
     {% endfor %}
 </table>
